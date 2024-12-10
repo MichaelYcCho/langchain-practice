@@ -22,6 +22,7 @@ def lookup(name: str) -> str:
     prompt_template = PromptTemplate(
         template=template, input_variables=["name_of_person"]
     )
+    # description 을 통해서 LLM이 해당 도구를 사용할지 말지를 결정하게 된다.
     tools_for_agent = [
         Tool(
             name="Crawl Google 4 linkedin profile page",
