@@ -17,6 +17,7 @@ openai = "^1.57.0"
 langchain-openai = "^0.2.11"
 langchain-ollama = "^0.2.1"
 requests = "^2.32.3"
+tweepy = "^4.14.0"
 
 
 [build-system]
