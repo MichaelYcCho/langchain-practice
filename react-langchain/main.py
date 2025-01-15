@@ -1,6 +1,7 @@
 from typing import Union, List
 
 from dotenv import load_dotenv
+from langchain.agents.output_parsers import ReActSingleInputOutputParser
 from langchain_openai import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.schema import AgentAction, AgentFinish
@@ -63,3 +64,10 @@ if __name__ == "__main__":
     )
 
     llm = ChatOpenAI(temperature=0, stop=["\nObservation", "Observation"])
+
+    # LCEL
+    agent = {"input": lambda  x : x["input"]} | prompt | llm | ReActSingleInputOutputParser()
+
+    res = agent.invoke(input={"input": "What is the length of the text 'Hello, World!'?"})
+    print('리스폰스')
+    print(res)
