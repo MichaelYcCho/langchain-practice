@@ -68,6 +68,15 @@ if __name__ == "__main__":
     # LCEL
     agent = {"input": lambda  x : x["input"]} | prompt | llm | ReActSingleInputOutputParser()
 
-    res = agent.invoke(input={"input": "What is the length of the text 'Hello, World!'?"})
-    print('리스폰스')
-    print(res)
+    # agent_step이 에이전트 동작유형이라면, 우리가 실행하려는 Tool의 모든 정보를 담게된다
+    agent_step: Union[AgentAction, AgentFinish] = agent.invoke(input={"input": "What is the length of the text 'Hello, World!'?"})
+    print('invoke 프로세스 : ', agent_step)
+
+    if isinstance(agent_step, AgentAction):
+        tool_name = agent_step.tool
+        tool_to_use = find_tool_by_name(tools, tool_name)
+        tool_input = agent_step.tool_input
+
+        # 도구를 사용한 후 결과 = observation
+        observation = tool_to_use.func(str(tool_input))
+        print(f"{observation=}")
