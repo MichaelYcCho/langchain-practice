@@ -8,6 +8,8 @@ from langchain.prompts import PromptTemplate
 from langchain.schema import AgentAction, AgentFinish
 from langchain.tools import Tool, tool
 from langchain.tools.render import render_text_description
+from numpy.f2py.cfuncs import callbacks
+from callbacks import AgentCallbackHandler
 
 load_dotenv()
 
@@ -64,7 +66,7 @@ if __name__ == "__main__":
         tool_names=", ".join([t.name for t in tools]),
     )
 
-    llm = ChatOpenAI(temperature=0, stop=["\nObservation", "Observation"])
+    llm = ChatOpenAI(temperature=0, stop=["\nObservation", "Observation"], callbacks=[AgentCallbackHandler])
     intermediate_steps = []
 
     # LCEL
